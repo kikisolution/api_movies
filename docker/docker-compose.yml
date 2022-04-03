@@ -1,0 +1,66 @@
+version: "3"
+
+services:
+  api-srv:
+    build: ./configs/php
+    container_name: api-srv
+    image: api-server-apache
+    volumes:
+      - ./configs/apache/server.pem:/etc/ssl/certs/server.pem
+      - ./configs/apache/server-key.pem:/etc/ssl/private/server-key.pem
+      - ./configs/apache/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./configs/apache/ports.conf:/etc/apache2/ports.conf
+      - ./configs/php/php.ini:/usr/local/etc/php/php.ini
+      - ../:/var/www/html/
+    ports:
+      - 9000:9000
+    restart: always
+#    networks:
+#      - backend
+
+  api-mysql:
+    image: mysql/mysql-server
+    container_name: "api-mysql"
+    volumes:
+      - db-volume-api-mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    restart: always
+
+  api-phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: "api-phpmyadmin"
+    volumes:
+      - ./configs/php/php.ini:/usr/local/etc/php/php.ini
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=${MYSQL_HOST}
+      - PMA_USER=${MYSQL_USER}
+      - PMA_PASSWORD=${MYSQL_USER}
+    links:
+      - api-mysql
+    restart: always
+
+  api-dump:
+   build: ./configs/db
+   container_name: "api-dump-mysql"
+   volumes:  
+    - ./configs/db/CreateDatabase.sql:/docker-entrypoint-initdb.d/CreateDatabase.sql
+   command: sh -c 'sleep 15 && /usr/bin/mysql -h${MYSQL_HOST} -u${MYSQL_USER} -p${MYSQL_PASSWORD} < /docker-entrypoint-initdb.d/CreateDatabase.sql'
+   depends_on:  
+    - api-mysql
+
+volumes:
+  db-volume-api-mysql:
+
+#networks:
+#  backend:
+#    driver: bridge
+
+

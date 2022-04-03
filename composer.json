@@ -1,0 +1,29 @@
+{
+    "name": "ezequiasfonseca/desafio",
+    "description": "Desafio Gestão de Filmes e Séries",
+    "authors": [
+      {
+        "name": "Ezequias Fonseca",
+        "email": "ezequiasfonseca@gmail.com"
+      }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Source\\":"source/",
+        "Tests\\":"tests/"
+      },
+      "files": [
+        "source/Config.php",
+        "source/core/functions/helpers.php"
+      ]
+    },
+    "require": {
+        "coffeecode/router": "1.0.*",
+        "coffeecode/datalayer": "1.1.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "guzzlehttp/guzzle": "^7.4",
+        "squizlabs/php_codesniffer": "*"
+    }
+}

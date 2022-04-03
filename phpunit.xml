@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         verbose="false"
+         cacheResult ="false">
+  <coverage >
+    <include>
+      <directory suffix=".php">source</directory>
+    </include>
+    <exclude>
+      <directory suffix=".php">vendor</directory>
+    </exclude>
+    <report>
+      <html outputDirectory="tests/reports/html-coverage" lowUpperBound="50" highLowerBound="90"/>
+    </report>
+  </coverage>
+  <testsuite name="Api Tests">
+    <directory>tests</directory>
+  </testsuite>
+  <logging>
+    <testdoxHtml outputFile="tests/reports/logs.html"/>
+  </logging>
+</phpunit>
