@@ -13,7 +13,7 @@
         "Tests\\":"tests/"
       },
       "files": [
-        "source/Config.php",
+        "Config.php",
         "source/core/functions/helpers.php"
       ]
     },

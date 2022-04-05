@@ -10,7 +10,6 @@ $router = new Router(API_URL);
 
 $router->group("api")->namespace("Source\Api\Controllers");
 $router->post("/create-user", "UserController:createUser");
-//$router->post("/auth/login", "LoginController:loginAuthorization");
 $router->post("/auth/login", "LoginController:loginInit");
 
 $router->get("/favorits/list/{hashUser}", "FavoritController:list");

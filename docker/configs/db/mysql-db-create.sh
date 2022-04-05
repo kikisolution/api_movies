@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Db name
-readonly DB_NAME="desafo"
+readonly DB_NAME="desafio"
 
 # Construct the MySQL query
 readonly Q1="GRANT ALL PRIVILEGES ON *.* TO root;"

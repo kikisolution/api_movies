@@ -2,4 +2,3 @@ vendor
 .idea
 .vscode
 .phpunit.result.cache
-source/Config.php

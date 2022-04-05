@@ -19,7 +19,7 @@ class LoginController
      */
     public function loginInit(array $data): void
     {
-       if($this->userController->checkEmail($data) && $this->userController->checkPassword($data)){
+       if($this->userController->checkEmail($data) && $this->userController->checkPassword($data)) {
             $this->success($this->userController->getUser());
        }else{
             $this->fail();
