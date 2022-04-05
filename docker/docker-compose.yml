@@ -13,7 +13,7 @@ services:
       - ./configs/php/php.ini:/usr/local/etc/php/php.ini
       - ../:/var/www/html/
     ports:
-      - 9000:9000
+      - 9000:80
     restart: always
 #    networks:
 #      - backend
@@ -23,6 +23,8 @@ services:
     container_name: "api-mysql"
     volumes:
       - db-volume-api-mysql:/var/lib/mysql
+      - ./configs/db/mysql-db-create.sh:/docker-entrypoint-initdb.d/mysql-db-create.sh
+      - ./configs/db/database.sql:/docker-entrypoint-initdb.d/database.sql
     ports:
       - 3306:3306
     environment:
@@ -46,15 +48,6 @@ services:
     links:
       - api-mysql
     restart: always
-
-  api-dump:
-   build: ./configs/db
-   container_name: "api-dump-mysql"
-   volumes:  
-    - ./configs/db/CreateDatabase.sql:/docker-entrypoint-initdb.d/CreateDatabase.sql
-   command: sh -c 'sleep 15 && /usr/bin/mysql -h${MYSQL_HOST} -u${MYSQL_USER} -p${MYSQL_PASSWORD} < /docker-entrypoint-initdb.d/CreateDatabase.sql'
-   depends_on:  
-    - api-mysql
 
 volumes:
   db-volume-api-mysql:
